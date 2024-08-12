@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/hello", (req, res) => {
-  res.send("Hello World!")
+  res.send("Hello World! Its Working")
 })
 
 app.use("/api/banner", bannerRoute);
