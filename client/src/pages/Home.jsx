@@ -33,17 +33,39 @@ const Home = () => {
           timerHours,
           timerMinutes,
           timerSeconds,
+          createdAt,
         } = response.data;
 
         setBannerText(text);
         setBannerLink(url);
         setIsVisible(isVisible);
+
+        // Calculate the time passed since creation
+        const createdAtTime = new Date(createdAt).getTime();
+        const currentTime = Date.now();
+        const elapsedSeconds = Math.floor((currentTime - createdAtTime) / 1000);
+
+        // Calculate the total initial seconds
+        const totalInitialSeconds =
+          timerDays * 86400 +
+          timerHours * 3600 +
+          timerMinutes * 60 +
+          timerSeconds;
+
+        // Calculate the remaining seconds
+        const remainingSeconds = Math.max(
+          totalInitialSeconds - elapsedSeconds,
+          0
+        );
+
+        // Set the adjusted time left
         setTimeLeft({
-          days: timerDays,
-          hours: timerHours,
-          minutes: timerMinutes,
-          seconds: timerSeconds,
+          days: Math.floor(remainingSeconds / 86400),
+          hours: Math.floor((remainingSeconds % 86400) / 3600),
+          minutes: Math.floor((remainingSeconds % 3600) / 60),
+          seconds: remainingSeconds % 60,
         });
+        
       } catch (error) {
         console.error("Error fetching banner data:", error);
       }

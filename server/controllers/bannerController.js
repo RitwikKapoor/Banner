@@ -1,17 +1,31 @@
 import { prisma } from "../config/prismaConfig.js";
 import { io } from "../index.js";
 
-
 export const bannerAll = async (req, res) => {
   try {
     const banner = await prisma.banner.findUnique({
       where: { id: 1 },
     });
-    res.json(banner);
+
+    const timer = await prisma.timer.findUnique({
+      where: { id: 1 },
+    });
+
+    res.status(200).json({
+      text: banner.text,
+      url: banner.url,
+      isVisible: banner.isVisible,
+      timerDays: timer.timerDays,
+      timerHours: timer.timerHours,
+      timerMinutes: timer.timerMinutes,
+      timerSeconds: timer.timerSeconds,
+      createdAt: timer.createdAt
+    });
   } catch (error) {
-    res.status(500).json({ error: "Error fetching banner data" });
+    res.status(500).json({ error: "Error fetching banner and timer data" });
   }
 };
+
 
 
 export const bannerTextUpdate = async (req, res) => {
@@ -26,7 +40,7 @@ export const bannerTextUpdate = async (req, res) => {
       io.emit("bannerTextUpdated", updatedBanner.text);
     }
 
-    res.json(updatedBanner);
+    res.status(200).json(updatedBanner);
   } catch (error) {
     res.status(500).json({ error: "Error updating text" });
   }
@@ -44,7 +58,7 @@ export const bannerLinkUpdate = async (req, res) => {
       io.emit("bannerLinkUpdated", updatedBanner.url);
     }
 
-    res.json(updatedBanner);
+    res.status(200).json(updatedBanner);
   } catch (error) {
     res.status(500).json({ error: "Error updating link" });
   }
@@ -62,7 +76,7 @@ export const bannerVisibilityUpdate = async (req, res) => {
       io.emit("bannerVisibilityUpdated", updatedBanner.isVisible);
     }
 
-    res.json(updatedBanner);
+    res.status(200).json(updatedBanner);
   } catch (error) {
     res.status(500).json({ error: "Error updating visibility" });
   }
@@ -71,26 +85,27 @@ export const bannerVisibilityUpdate = async (req, res) => {
 export const bannerTimerUpdate = async (req, res) => {
   try {
     const { days, hours, minutes, seconds } = req.body;
-    const updatedBanner = await prisma.banner.update({
+    const updatedTimer = await prisma.timer.update({
       where: { id: 1 },
       data: {
         timerDays: days,
         timerHours: hours,
         timerMinutes: minutes,
         timerSeconds: seconds,
+        createdAt: new Date(),
       },
     });
 
-    if (updatedBanner) {
+    if (updatedTimer) {
       io.emit("bannerTimerUpdated", {
-        days: updatedBanner.timerDays,
-        hours: updatedBanner.timerHours,
-        minutes: updatedBanner.timerMinutes,
-        seconds: updatedBanner.timerSeconds,
+        days: updatedTimer.timerDays,
+        hours: updatedTimer.timerHours,
+        minutes: updatedTimer.timerMinutes,
+        seconds: updatedTimer.timerSeconds,
       });
     }
 
-    res.json(updatedBanner);
+    res.status(200).json(updatedTimer);
   } catch (error) {
     res.status(500).json({ error: "Error updating timer" });
   }

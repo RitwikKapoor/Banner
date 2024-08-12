@@ -12,12 +12,20 @@ CREATE TABLE `User` (
 CREATE TABLE `Banner` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `text` VARCHAR(191) NOT NULL,
+    `url` VARCHAR(191) NOT NULL,
+    `isVisible` BOOLEAN NOT NULL DEFAULT true,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Timer` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `timerDays` INTEGER NOT NULL,
     `timerHours` INTEGER NOT NULL,
     `timerMinutes` INTEGER NOT NULL,
     `timerSeconds` INTEGER NOT NULL,
-    `url` VARCHAR(191) NOT NULL,
-    `isVisible` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

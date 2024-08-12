@@ -16,10 +16,15 @@ model User {
 model Banner {
   id            Int     @id @default(autoincrement())
   text          String
-  timerDays     Int
-  timerHours    Int
-  timerMinutes  Int
-  timerSeconds  Int
   url           String
   isVisible     Boolean @default(true)
+}
+
+model Timer {
+  id Int @id @default(autoincrement())
+  timerDays Int
+  timerHours Int
+  timerMinutes Int
+  timerSeconds Int
+  createdAt DateTime @default(now())
 }

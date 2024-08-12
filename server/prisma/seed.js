@@ -20,15 +20,25 @@ async function main() {
     update: {},
     create: {
       text: "Welcome to our site!",
-      timerDays: 7,
-      timerHours: 0,
-      timerMinutes: 0,
-      timerSeconds: 0,
       url: "https://example.com",
       isVisible: true,
     },
   });
   console.log({ banner });
+
+  // Create or update a timer
+  const timer = await prisma.timer.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      timerDays: 3,
+      timerHours: 12,
+      timerMinutes: 30,
+      timerSeconds: 45,
+      createdAt: new Date(),
+    },
+  });
+  console.log({ timer });
 }
 
 main()
