@@ -33,14 +33,14 @@ jobs:
         username: ${{ secrets.AWS_USERNAME }}
         key: ${{ secrets.AWS_PRIVATE_KEY }}
         script: |
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/banner-app:latest
-          docker stop banner-app-container || true
-          docker rm banner-app-container || true
-          docker run -d --name banner-app-container \
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/banner-app:latest
+          sudo docker stop banner-app-container || true
+          sudo docker rm banner-app-container || true
+          sudo docker run -d --name banner-app-container \
             -p 3000:3000 \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             -e PORT=${{ secrets.PORT }} \
             -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
             -e CLIENT_URL=${{ secrets.CLIENT_URL }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/banner-app:latest
-          docker system prune -af
+          sudo docker system prune -af
