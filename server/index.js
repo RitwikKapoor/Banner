@@ -23,6 +23,8 @@ export const io = new SocketIOServer(server, {
   },
 });
 
+console.log("Environment Variables:", process.env);
+
 
 io.on("connection", (socket) => {
   console.log("A user connected");
