@@ -37,7 +37,7 @@ jobs:
           sudo docker stop banner-app-container || true
           sudo docker rm banner-app-container || true
           sudo docker run -d --name banner-app-container \
-            -p 3000:3000 \
+            -p 6001:6001 \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             -e PORT=${{ secrets.PORT }} \
             -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
