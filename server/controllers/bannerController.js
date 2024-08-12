@@ -22,6 +22,7 @@ export const bannerAll = async (req, res) => {
       createdAt: timer.createdAt
     });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Error fetching banner and timer data" });
   }
 };
@@ -42,6 +43,7 @@ export const bannerTextUpdate = async (req, res) => {
 
     res.status(200).json(updatedBanner);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Error updating text" });
   }
 };
@@ -60,6 +62,7 @@ export const bannerLinkUpdate = async (req, res) => {
 
     res.status(200).json(updatedBanner);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Error updating link" });
   }
 };
@@ -107,6 +110,7 @@ export const bannerTimerUpdate = async (req, res) => {
 
     res.status(200).json(updatedTimer);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Error updating timer" });
   }
 };
